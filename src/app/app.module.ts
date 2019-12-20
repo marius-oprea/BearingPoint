@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TasksModule } from './core/tasks/tasks.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { TasksModule } from './core/tasks/tasks.module';
   ],
   imports: [
     BrowserModule,
-    TasksModule,
+    CoreModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],

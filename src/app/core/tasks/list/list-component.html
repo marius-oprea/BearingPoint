@@ -4,7 +4,7 @@
       <b>TASKS LIST</b>
     </div>
     <div class="list">
-      <mat-table [dataSource]="dataSource" matSort>
+      <mat-table [dataSource]="tasks$" matSort>
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
@@ -28,10 +28,10 @@
           <mat-header-cell *matHeaderCellDef class="action-col"></mat-header-cell>
           <mat-cell *matCellDef="let element; let i = index;" class="action-col">          
             <span class="action">
-              <mat-icon class="edit-icon" (click)="onEdit(element, element.surveyId)" matTooltip="edit this survey">edit</mat-icon>
+              <mat-icon class="edit-icon" (click)="onEdit(element, element.id)" matTooltip="edit this task">edit</mat-icon>
             </span>
             <span class="action">
-              <mat-icon class="delete-icon" (click)="onDelete(element.surveyId)" matTooltip="delete this survey">delete</mat-icon>
+              <mat-icon class="delete-icon" (click)="onDelete(element.id)" matTooltip="delete this task">delete</mat-icon>
             </span>
           </mat-cell>
         </ng-container>        

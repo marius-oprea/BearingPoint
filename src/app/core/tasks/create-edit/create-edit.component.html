@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+<form [formGroup]="formGroup" #form="ngForm" (ngSubmit)="onSubmit(formGroup.value)">
   <div class="container">
     <mat-card class="card">
       <div class="title">
@@ -9,13 +9,13 @@
       </div>
       <div class="name-container">
         <mat-form-field class="name">
-          <input matInput placeholder="Task name*" value="" formControlName="name">
+          <input matInput placeholder="Task name*" formControlName="name">
           <mat-error *ngIf="formGroup.controls.name.errors?.required">required</mat-error>
         </mat-form-field>
       </div>
       <div class="description-container">
         <mat-form-field class="description">
-          <textarea matInput placeholder="Task description"></textarea>
+          <textarea matInput placeholder="Task description" formControlName="description"></textarea>
         </mat-form-field>
       </div>
       <div class="btn">
