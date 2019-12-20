@@ -1,0 +1,44 @@
+<div class="container">
+  <mat-card class="card">
+    <div class="title">
+      <b>TASKS LIST</b>
+    </div>
+    <div class="list">
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="complete">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><span class="complete-header"> Complete </span></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="checkbox">
+              <mat-checkbox></mat-checkbox>
+            </span>             
+          </mat-cell>
+        </ng-container>        
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef class="action-col"></mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;" class="action-col">          
+            <span class="action">
+              <mat-icon class="edit-icon" (click)="onEdit(element, element.surveyId)" matTooltip="edit this survey">edit</mat-icon>
+            </span>
+            <span class="action">
+              <mat-icon class="delete-icon" (click)="onDelete(element.surveyId)" matTooltip="delete this survey">delete</mat-icon>
+            </span>
+          </mat-cell>
+        </ng-container>        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,25 @@
+.container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+
+  .card {
+    margin: 25pt;
+    
+    .title {
+      text-align: center;
+    }
+
+    .name {
+      width: 100%;
+    }
+
+    .description {
+      width: 100%;
+    }
+
+    .btn {
+      text-align: center;
+    }
+  }
+}

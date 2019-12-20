@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CreateEditComponent } from './create-edit/create-edit.component';
 import { ListComponent } from './list/list-component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MaterialModule } from 'src/app/shared/material.module';
 
 const components = [CreateEditComponent, ListComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [],
+  imports: [SharedModule, MaterialModule],
   exports: [...components]
 })
 export class TasksModule {

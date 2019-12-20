@@ -1,0 +1,29 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+  <div class="container">
+    <mat-card class="card">
+      <div class="title">
+        <b>
+          <span *ngIf="isNew">CREATE TASK</span>
+          <span *ngIf="!isNew">EDIT TASK</span>
+        </b>
+      </div>
+      <div class="name-container">
+        <mat-form-field class="name">
+          <input matInput placeholder="Task name*" value="" formControlName="name">
+          <mat-error *ngIf="formGroup.controls.name.errors?.required">required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="description-container">
+        <mat-form-field class="description">
+          <textarea matInput placeholder="Task description"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="btn">
+        <button mat-flat-button color="primary" type="submit">
+          <span *ngIf="isNew">CREATE</span>
+          <span *ngIf="!isNew">SAVE</span>
+        </button>  
+      </div>
+    </mat-card>
+  </div>  
+</form>

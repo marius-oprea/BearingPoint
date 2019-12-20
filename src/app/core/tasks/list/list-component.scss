@@ -1,0 +1,50 @@
+.container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  height: calc(100% - 303px);
+  overflow: auto;
+
+  .card {
+    margin: 25pt;
+
+    .title {
+      text-align: center;
+    }
+
+    .list {      
+      height: calc(100% - 20px);
+
+      .complete-header {
+        padding-left: 20px;
+      }
+
+      .checkbox {
+        padding-left: 20px;
+      } 
+
+      .action-col {
+        flex: 0 0 200px;
+
+        .action {
+          width: 200px;
+        }          
+
+        .view-icon {
+          color: green;
+          cursor: pointer;
+        }
+
+        .edit-icon {
+          color: blue;
+          cursor: pointer;
+        }
+
+        .delete-icon {
+          color: red;
+          cursor: pointer;
+        }          
+      }      
+    }
+  }
+}

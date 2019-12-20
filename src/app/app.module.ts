@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TasksModule } from './tasks/tasks.module';
+import { TasksModule } from './core/tasks/tasks.module';
 
 @NgModule({
   declarations: [
