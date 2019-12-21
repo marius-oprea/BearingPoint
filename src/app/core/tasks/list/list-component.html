@@ -19,7 +19,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header><span class="complete-header"> Complete </span></mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span class="checkbox">
-              <mat-checkbox></mat-checkbox>
+              <mat-checkbox [checked]="element.isCompleted" (change)="onCompleteChange(element, element.id)"></mat-checkbox>
             </span>             
           </mat-cell>
         </ng-container>        

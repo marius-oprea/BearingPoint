@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component } from '@angular/core';
 import { Task } from '../task.model';
 import { TasksService } from '../tasks.service';
 import { Observable } from 'rxjs';
@@ -9,31 +8,24 @@ import { Observable } from 'rxjs';
   templateUrl: './list-component.html',
   styleUrls: ['./list-component.scss']
 })
-export class ListComponent implements OnInit, AfterViewInit {
-  dataSource: MatTableDataSource<Task>;
+export class ListComponent {
   displayedColumns: string[];
   tasks$: Observable<Task[]>;
 
   constructor(private tasksService: TasksService) {
-    this.dataSource = new MatTableDataSource<Task>();
     this.displayedColumns = ['name', 'description', 'complete', 'action'];
     this.tasks$ = this.tasksService.tasks$;
   }
 
-  ngOnInit() {
-    // this.dataSource.data = this.tasksService.getAll();
-  }
-
-  ngAfterViewInit() {
-    this.tasks$.subscribe(result => {
-      console.log(result);
-    });
-  }
-
   onEdit(element, taskId) {
+    this.tasksService.dispatch('OPEN_FORM_IN_EDIT_MODE', {isEditMode: true, task: element}, taskId);
   }
 
   onDelete(taskId) {
+    this.tasksService.dispatch('DELETE', null, taskId);
+  }
 
+  onCompleteChange(element, taskId) {
+    this.tasksService.dispatch('COMPLETE', null, taskId);
   }
 }

@@ -3,8 +3,8 @@
     <mat-card class="card">
       <div class="title">
         <b>
-          <span *ngIf="isNew">CREATE TASK</span>
-          <span *ngIf="!isNew">EDIT TASK</span>
+          <span *ngIf="!(isEditMode$ | async)">CREATE TASK</span>
+          <span *ngIf="isEditMode$ | async">EDIT TASK</span>
         </b>
       </div>
       <div class="name-container">
@@ -20,9 +20,12 @@
       </div>
       <div class="btn">
         <button mat-flat-button color="primary" type="submit">
-          <span *ngIf="isNew">CREATE</span>
-          <span *ngIf="!isNew">SAVE</span>
+          <span *ngIf="!(isEditMode$ | async)">CREATE</span>
+          <span *ngIf="isEditMode$ | async">SAVE</span>
         </button>  
+      </div>
+      <div *ngIf="isEditMode$ | async">
+        Is completed? {{formGroup.value.isCompleted}}
       </div>
     </mat-card>
   </div>  

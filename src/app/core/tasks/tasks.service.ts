@@ -7,11 +7,21 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class TasksService {
   readonly tasksSource: BehaviorSubject<Task[]>;
-  readonly tasks$: Observable<any>;
+  readonly editableTaskSource: BehaviorSubject<Task>;
+  readonly isEditModeSource: BehaviorSubject<boolean>;
+  readonly tasks$: Observable<Task[]>;
+  readonly editableTask$: Observable<Task>;
+  readonly isEditMode$: Observable<boolean>;
 
   constructor(private httpClient: HttpClient, private db: DbService) {
     this.tasksSource = new BehaviorSubject<Task[]>([]);
     this.tasks$ = this.tasksSource.asObservable();
+
+    this.editableTaskSource = new BehaviorSubject<Task>({} as Task);
+    this.editableTask$ = this.editableTaskSource.asObservable();
+
+    this.isEditModeSource = new BehaviorSubject<boolean>(false);
+    this.isEditMode$ = this.isEditModeSource.asObservable();
 
     this.getAllTasks();
   }
@@ -24,23 +34,61 @@ export class TasksService {
     return this.tasksSource.getValue();
   }
 
-  async dispatch(event: string, payload?: Task, id?: string) {
+  set editableTask(value: Task) {
+    this.editableTaskSource.next(value);
+  }
+
+  get editableTask(): Task {
+    return this.editableTaskSource.getValue();
+  }
+
+  set isEditMode(value: boolean) {
+    this.isEditModeSource.next(value);
+  }
+
+  get isEditMode(): boolean {
+    return this.isEditModeSource.getValue();
+  }
+
+  async dispatch(event: string, payload?: any, id?: string) {
     switch (event) {
       case 'CREATE': {
-        const currentTask = await this.create(payload).toPromise();
-        this.tasks = [...this.tasks, currentTask];
+        await this.create(payload).toPromise();
+        this.getAllTasks();
         break;
       }
 
       case 'EDIT': {
-        const currentTask = await this.edit(payload, id).toPromise();
+        await this.edit(payload).toPromise();
+        this.getAllTasks();
         break;
+      }
+
+      case 'DELETE': {
+        await this.delete(id).toPromise();
+        this.getAllTasks();
+        break;
+      }
+
+      case 'COMPLETE': {
+        await this.complete(id).toPromise();
+        this.getAllTasks();
+        break;
+      }
+
+      case 'OPEN_FORM_IN_EDIT_MODE': {
+        console.log(payload);
+        this.isEditMode = payload.isEditMode;
+        this.editableTask = payload.task;
+
+        console.log(this.editableTask);
       }
     }
   }
 
   create(value: Task): Observable<Task> {
     // const url = '/tasks';
+    // const body = value;
     // return this.httpClient.post(url, body);
 
     return new Observable(observer => {
@@ -51,14 +99,42 @@ export class TasksService {
     });
   }
 
-  edit(value: Task, id: string): Observable<Task> {
+  edit(value: Task): Observable<Task> {
     // const url = `/tasks/${id}`;
+    // const body = value;
     // return this.httpClient.patch(url, body);
 
     return new Observable(observer => {
+      this.db.edit(value, value.id);
+
+      observer.next(value);
+      observer.complete();
+    });
+  }
+
+  complete(id: string): Observable<Task> {
+    // const url = `/tasks/${id}`;
+    // return this.httpClient.patch(url, isCompleted);
+
+    return new Observable(observer => {
+
+      const value = this.db.get(id);
+      value.isCompleted = !value.isCompleted;
       this.db.edit(value, id);
 
       observer.next(value);
+      observer.complete();
+    });
+  }
+
+  delete(id: string): Observable<Task[]> {
+    // const url = '/tasks/${id}';
+    // return this.httpClient.delete(url);
+
+    return new Observable(observer => {
+      this.db.delete(id);
+
+      observer.next();
       observer.complete();
     });
   }
